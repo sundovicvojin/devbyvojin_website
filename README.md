@@ -30,9 +30,38 @@ Core narrative:
 
 ## Zoned live data
 
-The current website uses static placeholder numbers for the Zoned Panonka preview. To make the numbers real, add an API route or server component fetch that reads from the Zoned backend.
+The website reads public apartment data from:
 
-Recommended path:
+```text
+https://app.zonedpanonka.rs/data/apartments.json
+```
+
+`app/api/zoned-stats/route.ts` fetches that JSON server-side and returns aggregate public stats for the devbyvojin case study preview:
+
+- total units
+- available units
+- reserved units
+- sold units
+- counts by lamela
+- counts by apartment structure
+- total listed area
+
+The front page loads `/api/zoned-stats` and displays live numbers in the Zoned Panonka hero panel. The route uses 10-minute revalidation.
+
+Manual check:
+
+```bash
+npm run zoned:stats
+```
+
+Current fallback numbers are based on the public JSON checked on 2026-09-05:
+
+- total: 210
+- available: 47
+- reserved: 4
+- sold: 159
+
+If this later needs to become more secure or private:
 
 1. Expose a small read-only endpoint from the Zoned server, for example total units, available units, reserved units and sold units.
 2. Protect it with an API key or signed token stored as a Vercel environment variable.

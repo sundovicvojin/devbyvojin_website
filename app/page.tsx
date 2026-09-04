@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, type CSSProperties } from 'react';
+import { useEffect, useState, type CSSProperties } from 'react';
 import {
   ArrowRight,
   Building2,
@@ -31,8 +31,8 @@ const copy = {
       labelLeft: 'Sales interface',
       labelRight: 'Project proof',
       title: 'Unit sales overview',
-      badge: 'live concept',
-      stats: ['Apartments', 'Availability', 'Lead flow'],
+      badge: 'live JSON data',
+      stats: ['Apartments', 'Available', 'Sold'],
       placeholder: 'Placeholder visual wrapper. Replace later with real Zoned Panonka screenshots.',
       chips: ['Clear offer', 'Buyer confidence', 'Faster updates'],
     },
@@ -148,8 +148,8 @@ const copy = {
       labelLeft: 'Prodajni interfejs',
       labelRight: 'Dokaz projekta',
       title: 'Pregled prodaje jedinica',
-      badge: 'live koncept',
-      stats: ['Stanovi', 'Dostupno', 'Tok upita'],
+      badge: 'live JSON podaci',
+      stats: ['Stanovi', 'Dostupno', 'Prodato'],
       placeholder: 'Placeholder vizuelni okvir. Kasnije zameniti pravim Zoned Panonka screenshotovima.',
       chips: ['Jasna ponuda', 'Poverenje kupca', 'Brže izmene'],
     },
@@ -256,13 +256,49 @@ const copy = {
 
 type Lang = keyof typeof copy;
 
-const statValues = ['86', '24', '1:1'];
+const fallbackZonedStats = {
+  totalUnits: 210,
+  availableUnits: 47,
+  soldUnits: 159,
+};
+
+type ZonedStats = typeof fallbackZonedStats & {
+  reservedUnits?: number;
+  updatedAt?: string;
+};
+
 const chartHeights = [68, 46, 82, 58];
 const proofIcons = [Building2, TrendingUp, Compass];
 
 export default function Home() {
   const [lang, setLang] = useState<Lang>('sr');
+  const [zonedStats, setZonedStats] = useState<ZonedStats>(fallbackZonedStats);
   const t = copy[lang];
+  const statValues = [
+    zonedStats.totalUnits,
+    zonedStats.availableUnits,
+    zonedStats.soldUnits,
+  ].map(String);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    fetch('/api/zoned-stats')
+      .then((response) => {
+        if (!response.ok) throw new Error(`Zoned stats failed: ${response.status}`);
+        return response.json() as Promise<ZonedStats>;
+      })
+      .then((stats) => {
+        if (!cancelled) setZonedStats(stats);
+      })
+      .catch(() => {
+        if (!cancelled) setZonedStats(fallbackZonedStats);
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   return (
     <main className="min-h-screen overflow-hidden bg-[var(--page-bg)] text-[var(--ink)]">
