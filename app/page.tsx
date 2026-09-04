@@ -105,7 +105,7 @@ const copy = {
       'Premium digital products need ownership after launch. Care gives you a monthly partner for updates, improvements, performance, content changes and business-critical fixes.',
     careBoxTitle: 'Best for teams that cannot afford a stale website.',
     carePoints: ['Monthly improvements', 'Priority response', 'Analytics-informed changes', 'Security and stability checks'],
-    founderTitle: 'Vojin Sundovic',
+    founderTitle: 'Vojin Šundović',
     founderText:
       'devbyvojin is a Novi Sad based digital studio focused on premium websites, real estate sales applications and long-term digital product care.',
     founderBoxTitle: 'Small studio, senior ownership, direct communication.',
@@ -222,7 +222,7 @@ const copy = {
       'Premium digitalni proizvodi traže vlasništvo posle lansiranja. Care daje mesečnog partnera za izmene, unapređenja, performanse, sadržaj i bitne popravke.',
     careBoxTitle: 'Za timove koji ne mogu da priušte zastareo sajt.',
     carePoints: ['Mesečna unapređenja', 'Prioritetan odgovor', 'Izmene vođene analitikom', 'Provere stabilnosti i sigurnosti'],
-    founderTitle: 'Vojin Sundović',
+    founderTitle: 'Vojin Šundović',
     founderText:
       'devbyvojin je digitalni studio iz Novog Sada fokusiran na premium sajtove, aplikacije za prodaju nekretnina i dugoročno održavanje digitalnih proizvoda.',
     founderBoxTitle: 'Mali studio, direktno vlasništvo nad poslom, jasna komunikacija.',
