@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState, type CSSProperties } from 'react';
+import Image from 'next/image';
 import {
   ArrowRight,
   Building2,
@@ -78,9 +79,9 @@ const copy = {
     proofTitle: 'Zoned Panonka shows the direction.',
     proofText:
       'A real estate sales experience built around clarity: project presentation, unit information, availability logic and a path toward qualified inquiry.',
-    proofVisual: 'Case study visual',
+    proofVisual: 'Mobile case study view',
     proofItems: ['Project showcase', 'Unit catalogue', 'Availability view', 'Lead intent'],
-    proofPlaceholder: 'Replace this wrapper with actual screenshots when final project imagery is ready.',
+    proofPlaceholder: 'Cropped from the live Zoned Panonka sales application.',
     proofDetails: [
       ['Before', 'Information was harder to present as one confident buying journey.'],
       ['After', 'The project can be shown through a cleaner digital sales experience.'],
@@ -195,9 +196,9 @@ const copy = {
     proofTitle: 'Zoned Panonka pokazuje pravac.',
     proofText:
       'Prodajno iskustvo za nekretnine građeno oko jasnoće: prezentacija projekta, informacije o jedinicama, dostupnost i put ka kvalifikovanom upitu.',
-    proofVisual: 'Vizuelni prikaz case study-ja',
+    proofVisual: 'Mobilni prikaz case study-ja',
     proofItems: ['Prezentacija projekta', 'Katalog jedinica', 'Pregled dostupnosti', 'Namena upita'],
-    proofPlaceholder: 'Zameniti ovaj okvir pravim screenshotovima kada budu spremni finalni vizuali.',
+    proofPlaceholder: 'Isečeno iz live Zoned Panonka prodajne aplikacije.',
     proofDetails: [
       ['Pre', 'Informacije je bilo teže predstaviti kao jedno jasno kupovno iskustvo.'],
       ['Posle', 'Projekat može da se predstavi kroz čistije digitalno prodajno iskustvo.'],
@@ -493,16 +494,20 @@ export default function Home() {
           <div className="space-y-4">
             <div className="reveal-up liquid-card overflow-hidden p-0">
               <div className="grid min-h-[470px] gap-0 lg:grid-cols-[1fr_0.72fr]">
-                <div className="bg-[linear-gradient(135deg,#eef3ed,#dce9e1)] p-8">
-                  <div className="flex h-full flex-col justify-between rounded-[1.4rem] border border-black/8 bg-white/58 p-6 shadow-sm backdrop-blur-xl">
+                <div className="bg-[linear-gradient(135deg,#eef3ed,#dce9e1)] p-6 sm:p-8">
+                  <div className="flex h-full flex-col justify-between rounded-[1.4rem] border border-black/8 bg-white/58 p-4 shadow-sm backdrop-blur-xl sm:p-6">
                     <div>
                       <p className="text-sm uppercase tracking-[0.16em] text-[var(--muted-ink)]">{t.proofVisual}</p>
                       <h3 className="mt-4 text-4xl font-semibold">Zoned Panonka</h3>
                     </div>
-                    <div className="grid gap-3 sm:grid-cols-2">
-                      {t.proofItems.map((item) => (
-                        <span key={item} className="rounded-2xl border border-black/8 bg-white/70 p-4 text-sm font-medium">{item}</span>
-                      ))}
+                    <div className="my-7 overflow-hidden rounded-[1.25rem] border border-black/10 bg-[var(--ink)] shadow-[0_22px_60px_rgba(24,32,39,0.18)]">
+                      <Image
+                        src="/case-studies/zoned-panonka-mobile.jpg"
+                        alt="Zoned Panonka mobile apartment availability interface"
+                        width={900}
+                        height={1260}
+                        className="aspect-[5/7] h-full w-full object-cover"
+                      />
                     </div>
                     <p className="text-sm text-[var(--muted-ink)]">{t.proofPlaceholder}</p>
                   </div>
