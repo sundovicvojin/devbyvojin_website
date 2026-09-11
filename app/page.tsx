@@ -2,6 +2,7 @@
 
 import { useEffect, useState, type CSSProperties } from 'react';
 import Image from 'next/image';
+import { trackEvent } from '../lib/analytics';
 import {
   ArrowRight,
   Building2,
@@ -271,6 +272,25 @@ type ZonedStats = typeof fallbackZonedStats & {
 const chartHeights = [68, 46, 82, 58];
 const proofIcons = [Building2, TrendingUp, Compass];
 
+const handleStartProject = (ctaLocation: string, ctaText: string) => {
+  trackEvent('start_project', {
+    cta_location: ctaLocation,
+    cta_text: ctaText,
+  });
+};
+
+const handleCaseStudyView = () => {
+  trackEvent('view_case_study', {
+    project_name: 'Zoned Panonka',
+  });
+};
+
+const handleEmailClick = () => {
+  trackEvent('click_email', {
+    contact_location: 'contact',
+  });
+};
+
 export default function Home() {
   const [lang, setLang] = useState<Lang>('sr');
   const [zonedStats, setZonedStats] = useState<ZonedStats>(fallbackZonedStats);
@@ -337,7 +357,11 @@ export default function Home() {
                 </button>
               ))}
             </div>
-            <a href="#contact" className="hidden items-center gap-2 rounded-full bg-[var(--ink)] px-4 py-2.5 text-sm font-medium text-white shadow-[0_12px_34px_rgba(25,31,38,0.16)] transition hover:-translate-y-0.5 hover:bg-black sm:inline-flex">
+            <a
+              href="#contact"
+              onClick={() => handleStartProject('header', t.start)}
+              className="hidden items-center gap-2 rounded-full bg-[var(--ink)] px-4 py-2.5 text-sm font-medium text-white shadow-[0_12px_34px_rgba(25,31,38,0.16)] transition hover:-translate-y-0.5 hover:bg-black sm:inline-flex"
+            >
               {t.start} <ArrowRight className="size-4" />
             </a>
           </div>
@@ -357,7 +381,11 @@ export default function Home() {
             </h1>
             <p className="mt-8 max-w-2xl text-xl leading-8 text-[var(--muted-ink)] sm:text-2xl sm:leading-9">{t.heroText}</p>
             <div className="mt-10 flex flex-col gap-3 sm:flex-row">
-              <a href="#contact" className="inline-flex items-center justify-center gap-2 rounded-full bg-[var(--signal)] px-6 py-4 text-base font-semibold text-white shadow-[0_20px_50px_rgba(60,141,116,0.28)] transition hover:-translate-y-0.5">
+              <a
+                href="#contact"
+                onClick={() => handleStartProject('hero', t.start)}
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-[var(--signal)] px-6 py-4 text-base font-semibold text-white shadow-[0_20px_50px_rgba(60,141,116,0.28)] transition hover:-translate-y-0.5"
+              >
                 {t.start} <ArrowRight className="size-5" />
               </a>
               <a href="#proof" className="inline-flex items-center justify-center gap-2 rounded-full border border-black/10 bg-white/60 px-6 py-4 text-base font-semibold text-[var(--ink)] backdrop-blur-xl transition hover:-translate-y-0.5 hover:bg-white">
@@ -463,7 +491,11 @@ export default function Home() {
               <p className="section-kicker text-[#9ce0c2]">{t.kicker.offer}</p>
               <h2 className="section-title text-white">{t.servicesTitle}</h2>
             </div>
-            <a href="#contact" className="inline-flex w-fit items-center gap-2 rounded-full border border-white/16 bg-white/10 px-5 py-3 font-semibold text-white backdrop-blur-xl transition hover:bg-white hover:text-[var(--ink)]">
+            <a
+              href="#contact"
+              onClick={() => handleStartProject('services', t.fit)}
+              className="inline-flex w-fit items-center gap-2 rounded-full border border-white/16 bg-white/10 px-5 py-3 font-semibold text-white backdrop-blur-xl transition hover:bg-white hover:text-[var(--ink)]"
+            >
               {t.fit} <ArrowRight className="size-4" />
             </a>
           </div>
@@ -492,7 +524,12 @@ export default function Home() {
             <p className="section-copy">{t.proofText}</p>
           </div>
           <div className="space-y-4">
-            <div className="reveal-up liquid-card overflow-hidden p-0">
+            <button
+              type="button"
+              aria-label="View Zoned Panonka case study"
+              className="reveal-up liquid-card w-full overflow-hidden p-0 text-left"
+              onClick={handleCaseStudyView}
+            >
               <div className="grid min-h-[470px] gap-0 lg:grid-cols-[1fr_0.72fr]">
                 <div className="bg-[linear-gradient(135deg,#eef3ed,#dce9e1)] p-6 sm:p-8">
                   <div className="flex h-full flex-col justify-between rounded-[1.4rem] border border-black/8 bg-white/58 p-4 shadow-sm backdrop-blur-xl sm:p-6">
@@ -524,7 +561,7 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-            </div>
+            </button>
             <div className="grid gap-4 sm:grid-cols-3">
               {t.proofBadges.map((text, index) => {
                 const Icon = proofIcons[index];
@@ -647,7 +684,11 @@ export default function Home() {
               </div>
               <div className="rounded-[1.5rem] border border-white/12 bg-white/[0.08] p-6 backdrop-blur-xl">
                 <p className="text-lg leading-8 text-white/72">{t.contactText}</p>
-                <a href={`mailto:${contactEmail}?subject=Project%20inquiry%20-%20devbyvojin`} className="mt-8 inline-flex items-center gap-3 rounded-full bg-white px-6 py-4 font-semibold text-[var(--ink)] transition hover:-translate-y-0.5">
+                <a
+                  href={`mailto:${contactEmail}?subject=Project%20inquiry%20-%20devbyvojin`}
+                  onClick={handleEmailClick}
+                  className="mt-8 inline-flex items-center gap-3 rounded-full bg-white px-6 py-4 font-semibold text-[var(--ink)] transition hover:-translate-y-0.5"
+                >
                   <Mail className="size-5" /> {contactEmail}
                 </a>
               </div>
